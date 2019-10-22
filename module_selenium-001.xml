@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_selenium-001" default="compile.module.selenium-001">
+  <dirname property="module.selenium-001.basedir" file="${ant.file.module_selenium-001}"/>
+  
+  <property name="module.jdk.home.selenium-001" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.selenium-001" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.selenium-001" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.selenium-001" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="selenium-001.output.dir" value="${module.selenium-001.basedir}/target/classes"/>
+  <property name="selenium-001.testoutput.dir" value="${module.selenium-001.basedir}/target/test-classes"/>
+  
+  <path id="selenium-001.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="selenium-001.module.production.classpath">
+    <path refid="${module.jdk.classpath.selenium-001}"/>
+    <pathelement location="${basedir}/../../SSM lib/selenium-server-standalone-3.141.59.jar"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-java:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-chrome-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-edge-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-firefox-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-ie-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-opera-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-remote-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-safari-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-support:3.141.59.classpath"/>
+    <path refid="library.maven:_net.bytebuddy:byte-buddy:1.8.15.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-exec:1.3.classpath"/>
+    <path refid="library.maven:_com.google.guava:guava:25.0-jre.classpath"/>
+    <path refid="library.maven:_com.google.code.findbugs:jsr305:1.3.9.classpath"/>
+    <path refid="library.maven:_org.checkerframework:checker-compat-qual:2.0.0.classpath"/>
+    <path refid="library.maven:_com.google.errorprone:error_prone_annotations:2.1.3.classpath"/>
+    <path refid="library.maven:_com.google.j2objc:j2objc-annotations:1.1.classpath"/>
+    <path refid="library.maven:_org.codehaus.mojo:animal-sniffer-annotations:1.14.classpath"/>
+    <path refid="library.maven:_com.squareup.okhttp3:okhttp:3.11.0.classpath"/>
+    <path refid="library.maven:_com.squareup.okio:okio:1.14.0.classpath"/>
+    <path refid="library.maven:_commons-io:commons-io:2.6.classpath"/>
+    <path refid="library.maven:_net.sf.json-lib:json-lib:jdk15:2.4.classpath"/>
+    <path refid="library.maven:_commons-beanutils:commons-beanutils:1.8.0.classpath"/>
+    <path refid="library.maven:_commons-collections:commons-collections:3.2.1.classpath"/>
+    <path refid="library.maven:_commons-lang:commons-lang:2.5.classpath"/>
+    <path refid="library.maven:_commons-logging:commons-logging:1.1.1.classpath"/>
+    <path refid="library.maven:_net.sf.ezmorph:ezmorph:1.0.6.classpath"/>
+    <path refid="library.maven:_org.apache.httpcomponents:httpclient:4.5.8.classpath"/>
+    <path refid="library.maven:_org.apache.httpcomponents:httpcore:4.4.11.classpath"/>
+    <path refid="library.maven:_commons-codec:commons-codec:1.11.classpath"/>
+    <path refid="library.maven:_com.github.kevinsawicki:http-request:6.0.classpath"/>
+    <path refid="library.maven:_com.codeborne:phantomjsdriver:1.4.4.classpath"/>
+    <path refid="library.maven:_org.projectlombok:lombok:1.18.8.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-api:3.8.1.classpath"/>
+  </path>
+  
+  <path id="selenium-001.runtime.production.module.classpath">
+    <pathelement location="${selenium-001.output.dir}"/>
+    <pathelement location="${basedir}/../../SSM lib/selenium-server-standalone-3.141.59.jar"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-java:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-chrome-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-edge-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-firefox-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-ie-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-opera-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-remote-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-safari-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-support:3.141.59.classpath"/>
+    <path refid="library.maven:_net.bytebuddy:byte-buddy:1.8.15.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-exec:1.3.classpath"/>
+    <path refid="library.maven:_com.google.guava:guava:25.0-jre.classpath"/>
+    <path refid="library.maven:_com.google.code.findbugs:jsr305:1.3.9.classpath"/>
+    <path refid="library.maven:_org.checkerframework:checker-compat-qual:2.0.0.classpath"/>
+    <path refid="library.maven:_com.google.errorprone:error_prone_annotations:2.1.3.classpath"/>
+    <path refid="library.maven:_com.google.j2objc:j2objc-annotations:1.1.classpath"/>
+    <path refid="library.maven:_org.codehaus.mojo:animal-sniffer-annotations:1.14.classpath"/>
+    <path refid="library.maven:_com.squareup.okhttp3:okhttp:3.11.0.classpath"/>
+    <path refid="library.maven:_com.squareup.okio:okio:1.14.0.classpath"/>
+    <path refid="library.maven:_commons-io:commons-io:2.6.classpath"/>
+    <path refid="library.maven:_net.sf.json-lib:json-lib:jdk15:2.4.classpath"/>
+    <path refid="library.maven:_commons-beanutils:commons-beanutils:1.8.0.classpath"/>
+    <path refid="library.maven:_commons-collections:commons-collections:3.2.1.classpath"/>
+    <path refid="library.maven:_commons-lang:commons-lang:2.5.classpath"/>
+    <path refid="library.maven:_commons-logging:commons-logging:1.1.1.classpath"/>
+    <path refid="library.maven:_net.sf.ezmorph:ezmorph:1.0.6.classpath"/>
+    <path refid="library.maven:_org.apache.httpcomponents:httpclient:4.5.8.classpath"/>
+    <path refid="library.maven:_org.apache.httpcomponents:httpcore:4.4.11.classpath"/>
+    <path refid="library.maven:_commons-codec:commons-codec:1.11.classpath"/>
+    <path refid="library.maven:_com.github.kevinsawicki:http-request:6.0.classpath"/>
+    <path refid="library.maven:_com.codeborne:phantomjsdriver:1.4.4.classpath"/>
+    <path refid="library.maven:_org.projectlombok:lombok:1.18.8.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-api:3.8.1.classpath"/>
+  </path>
+  
+  <path id="selenium-001.module.classpath">
+    <path refid="${module.jdk.classpath.selenium-001}"/>
+    <pathelement location="${selenium-001.output.dir}"/>
+    <pathelement location="${basedir}/../../SSM lib/selenium-server-standalone-3.141.59.jar"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-java:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-chrome-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-edge-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-firefox-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-ie-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-opera-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-remote-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-safari-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-support:3.141.59.classpath"/>
+    <path refid="library.maven:_net.bytebuddy:byte-buddy:1.8.15.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-exec:1.3.classpath"/>
+    <path refid="library.maven:_com.google.guava:guava:25.0-jre.classpath"/>
+    <path refid="library.maven:_com.google.code.findbugs:jsr305:1.3.9.classpath"/>
+    <path refid="library.maven:_org.checkerframework:checker-compat-qual:2.0.0.classpath"/>
+    <path refid="library.maven:_com.google.errorprone:error_prone_annotations:2.1.3.classpath"/>
+    <path refid="library.maven:_com.google.j2objc:j2objc-annotations:1.1.classpath"/>
+    <path refid="library.maven:_org.codehaus.mojo:animal-sniffer-annotations:1.14.classpath"/>
+    <path refid="library.maven:_com.squareup.okhttp3:okhttp:3.11.0.classpath"/>
+    <path refid="library.maven:_com.squareup.okio:okio:1.14.0.classpath"/>
+    <path refid="library.maven:_commons-io:commons-io:2.6.classpath"/>
+    <path refid="library.maven:_net.sf.json-lib:json-lib:jdk15:2.4.classpath"/>
+    <path refid="library.maven:_commons-beanutils:commons-beanutils:1.8.0.classpath"/>
+    <path refid="library.maven:_commons-collections:commons-collections:3.2.1.classpath"/>
+    <path refid="library.maven:_commons-lang:commons-lang:2.5.classpath"/>
+    <path refid="library.maven:_commons-logging:commons-logging:1.1.1.classpath"/>
+    <path refid="library.maven:_net.sf.ezmorph:ezmorph:1.0.6.classpath"/>
+    <path refid="library.maven:_org.apache.httpcomponents:httpclient:4.5.8.classpath"/>
+    <path refid="library.maven:_org.apache.httpcomponents:httpcore:4.4.11.classpath"/>
+    <path refid="library.maven:_commons-codec:commons-codec:1.11.classpath"/>
+    <path refid="library.maven:_com.github.kevinsawicki:http-request:6.0.classpath"/>
+    <path refid="library.maven:_com.codeborne:phantomjsdriver:1.4.4.classpath"/>
+    <path refid="library.maven:_org.projectlombok:lombok:1.18.8.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-api:3.8.1.classpath"/>
+  </path>
+  
+  <path id="selenium-001.runtime.module.classpath">
+    <pathelement location="${selenium-001.testoutput.dir}"/>
+    <pathelement location="${selenium-001.output.dir}"/>
+    <pathelement location="${basedir}/../../SSM lib/selenium-server-standalone-3.141.59.jar"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-java:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-chrome-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-edge-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-firefox-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-ie-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-opera-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-remote-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-safari-driver:3.141.59.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-support:3.141.59.classpath"/>
+    <path refid="library.maven:_net.bytebuddy:byte-buddy:1.8.15.classpath"/>
+    <path refid="library.maven:_org.apache.commons:commons-exec:1.3.classpath"/>
+    <path refid="library.maven:_com.google.guava:guava:25.0-jre.classpath"/>
+    <path refid="library.maven:_com.google.code.findbugs:jsr305:1.3.9.classpath"/>
+    <path refid="library.maven:_org.checkerframework:checker-compat-qual:2.0.0.classpath"/>
+    <path refid="library.maven:_com.google.errorprone:error_prone_annotations:2.1.3.classpath"/>
+    <path refid="library.maven:_com.google.j2objc:j2objc-annotations:1.1.classpath"/>
+    <path refid="library.maven:_org.codehaus.mojo:animal-sniffer-annotations:1.14.classpath"/>
+    <path refid="library.maven:_com.squareup.okhttp3:okhttp:3.11.0.classpath"/>
+    <path refid="library.maven:_com.squareup.okio:okio:1.14.0.classpath"/>
+    <path refid="library.maven:_commons-io:commons-io:2.6.classpath"/>
+    <path refid="library.maven:_net.sf.json-lib:json-lib:jdk15:2.4.classpath"/>
+    <path refid="library.maven:_commons-beanutils:commons-beanutils:1.8.0.classpath"/>
+    <path refid="library.maven:_commons-collections:commons-collections:3.2.1.classpath"/>
+    <path refid="library.maven:_commons-lang:commons-lang:2.5.classpath"/>
+    <path refid="library.maven:_commons-logging:commons-logging:1.1.1.classpath"/>
+    <path refid="library.maven:_net.sf.ezmorph:ezmorph:1.0.6.classpath"/>
+    <path refid="library.maven:_org.apache.httpcomponents:httpclient:4.5.8.classpath"/>
+    <path refid="library.maven:_org.apache.httpcomponents:httpcore:4.4.11.classpath"/>
+    <path refid="library.maven:_commons-codec:commons-codec:1.11.classpath"/>
+    <path refid="library.maven:_com.github.kevinsawicki:http-request:6.0.classpath"/>
+    <path refid="library.maven:_com.codeborne:phantomjsdriver:1.4.4.classpath"/>
+    <path refid="library.maven:_org.projectlombok:lombok:1.18.8.classpath"/>
+    <path refid="library.maven:_org.seleniumhq.selenium:selenium-api:3.8.1.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.selenium-001">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.selenium-001">
+    <patternset refid="excluded.from.module.selenium-001"/>
+  </patternset>
+  
+  <path id="selenium-001.module.sourcepath">
+    <dirset dir="${module.selenium-001.basedir}">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="selenium-001.module.test.sourcepath">
+    <dirset dir="${module.selenium-001.basedir}">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.selenium-001" depends="compile.module.selenium-001.production,compile.module.selenium-001.tests" description="Compile module selenium-001"/>
+  
+  <target name="compile.module.selenium-001.production" depends="register.custom.compilers" description="Compile module selenium-001; production classes">
+    <mkdir dir="${selenium-001.output.dir}"/>
+    <javac2 destdir="${selenium-001.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.selenium-001}/javac">
+      <compilerarg line="${compiler.args.selenium-001}"/>
+      <bootclasspath refid="selenium-001.module.bootclasspath"/>
+      <classpath refid="selenium-001.module.production.classpath"/>
+      <src refid="selenium-001.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.selenium-001"/>
+    </javac2>
+    
+    <copy todir="${selenium-001.output.dir}">
+      <fileset dir="${module.selenium-001.basedir}/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.selenium-001.basedir}/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.selenium-001.tests" depends="register.custom.compilers,compile.module.selenium-001.production" description="compile module selenium-001; test classes" unless="skip.tests">
+    <mkdir dir="${selenium-001.testoutput.dir}"/>
+    <javac2 destdir="${selenium-001.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.selenium-001}/javac">
+      <compilerarg line="${compiler.args.selenium-001}"/>
+      <bootclasspath refid="selenium-001.module.bootclasspath"/>
+      <classpath refid="selenium-001.module.classpath"/>
+      <src refid="selenium-001.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.selenium-001"/>
+    </javac2>
+    
+    <copy todir="${selenium-001.testoutput.dir}">
+      <fileset dir="${module.selenium-001.basedir}/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.selenium-001" description="cleanup module">
+    <delete dir="${selenium-001.output.dir}"/>
+    <delete dir="${selenium-001.testoutput.dir}"/>
+  </target>
+</project>
