@@ -28,7 +28,7 @@ public class Post {
         reques.receive(ps);
         str = new String(baos.toByteArray(), StandardCharsets.UTF_8);
         JSONArray jsonArray = JSONArray.fromObject(str);
-        System.out.println("send_Body:"+jsonArray.toString());
+//        System.out.println("send_Body:"+jsonArray.toString());
         return jsonArray;
     }
     public static JSONObject send_Body_Object(Map<String,String>headers, Map<String, String> data, String url) throws ParseException, IOException {
@@ -65,7 +65,7 @@ public class Post {
         reques.receive(ps);
         str = new String(baos.toByteArray(), StandardCharsets.UTF_8);
         JSONObject jsonArray = JSONObject.fromObject(str);
-        System.out.println("send_Object："+jsonArray.toString());
+//        System.out.println("send_Object："+jsonArray.toString());
         return jsonArray;
     }
     public static JSONArray send(Map<String,String>headers, String url) throws ParseException, IOException {

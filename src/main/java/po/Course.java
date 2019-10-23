@@ -18,4 +18,6 @@ public class Course {
     private String courseName;
 
     private String openClassId;
+
+    private int process;
 }
