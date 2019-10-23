@@ -1,9 +1,9 @@
-# selenium-001
-职教云刷课
+# 职教云刷课程序
 
 ！！电脑需要有java环境！！
 使用cmd 切换到程序目录下（不会请百度）
-然后输入java -jar selenium-001.jar
+然后输入
+> java -jar selenium-001.jar
 
 浏览器登陆自己的职教云账号 按f12弹出控制台 f5刷新页面 获得cookie值
 
