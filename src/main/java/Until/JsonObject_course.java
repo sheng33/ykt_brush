@@ -33,9 +33,7 @@ public class JsonObject_course {
 
         processLists.add(new ProcessList(jsonObject.getString("courseOpenId"),jsonObject.getString("openClassId")
                 ,jsonObject.getString("openCourseCellCount"),jsonObject.getInt("stuStudyCourseOpenCellCount"),moduleLists));
-        for(ProcessList processList:processLists){
-            System.out.println(processList);
-        }
+
         return processLists;
     }
     public static List<child_DIrectory> child_dIrectoryList(String str){

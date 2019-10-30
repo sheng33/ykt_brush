@@ -16,7 +16,10 @@ import java.util.*;
 
 
 
-public class studioFiddler {
+/**
+ * @author 13055
+ */
+public class StudioFiddler {
     /**
      * 导入资源文件
      */
@@ -31,23 +34,23 @@ public class studioFiddler {
     private static List<Course> courseList = new ArrayList<>();
     /**课程章节列表 */
     private static List<ProcessList> processLists = new ArrayList<>();
-    /**章节信息列表 */
-    private static List<TopicByModuleId> topicByModuleIdList = new ArrayList<>();
     /**章节详情列表 */
     private static List<CellByTopicId> cellByTopicIdList = new ArrayList<>();
     /**课件详情信息列表 */
     private static List<child_DIrectory>  child_dIrectoryList = new ArrayList<>();
     /**课程ID，修改此项，可选择需要刷的课程 */
     private static int course = 0;
-    /**Cookie值 */
-    private static String cookieStr = "";
-    /**防止死循环 */
-    private static int xunhuan = 0;
+
     public static void main(String[] args) throws Exception {
+        /**章节信息列表 */
+        List<TopicByModuleId> topicByModuleIdList = new ArrayList<>();
+        /**Cookie值 */
+        String cookieStr = "";
         System.out.print("输入cookie:");
         Scanner sc = new Scanner(System.in);
         cookieStr = sc.nextLine();
         headers.put("Cookie",cookieStr);
+//        headers.put("Cookie","acw_tc=76b20fe715720085664734570e243caf6f32ba972ea5411be218cd16208ae5; verifycode=6A6F7F8E839EF1DD93B4CD5BF2DDC46C@637076341709319462; Hm_lvt_a3821194625da04fcd588112be734f5b=1572008573; auth=0102CC6EABAF4B59D708FECC7E57819F59D70801167400730073006E006100610069006F00730035006E0063006B006D00330066006B006E00690073006C00770000012F00FF8EF54D13D42C8238CEEEE282D66B072B7C6E7145; token=hpbaafgqyzpajveh54oesa; Hm_lpvt_a3821194625da04fcd588112be734f5b=1572008594; _bl_uid=hLkmb2Fn6wX5e7cgh06tijI6UFgw");
         System.out.println("欢迎您："+getUserInfo());
         try {
             JSONObject course_Json = Post.send_Object(headers,resource.getString("getLearnningCourseList"));
@@ -77,6 +80,7 @@ public class studioFiddler {
                     System.out.println("\n强迫症的我居然对不齐。。。难受");
                     System.out.print("\n请选择课程名(输入Id):");
                     course = sc.nextInt();
+//                    course = 1;
                 }
             }catch (Exception e){
                 e.printStackTrace();
@@ -100,13 +104,13 @@ public class studioFiddler {
                     JSONObject jsonObject2 = getCellByTopicId(resource.getString("getCellByTopicId"),data);
                     cellByTopicIdList = JsonObject_course.getObject_CellByTopicId(jsonObject2.toString());
                     for(int cellCount=0;cellCount<cellByTopicIdList.size();cellCount++){
+
                         if(cellByTopicIdList.get(cellCount).getChildNodeLists()==null){
                             for(int childCount=0;childCount<cellByTopicIdList.size();childCount++){
-                                if(cellByTopicIdList.get(cellCount).getStuCellPercent() == 100||cellByTopicIdList.get(cellCount).getCategoryName().equals("文档")
-                                ||cellByTopicIdList.get(cellCount).getCategoryName().equals("链接")){
+
+                                if(cellByTopicIdList.get(cellCount).getStuCellPercent() == 100||!(cellByTopicIdList.get(cellCount).getCategoryName().equals("视频"))){
                                     continue;
                                 }
-
                                 boolean pd = true;
                                 while(pd) {
                                     pd = funtion1(processCount, cellCount, childCount);
@@ -114,9 +118,10 @@ public class studioFiddler {
                             }
                         }else{
                             for(int childCount=0;childCount<cellByTopicIdList.get(cellCount).getChildNodeLists().size();childCount++){
-                                if(cellByTopicIdList.get(cellCount).getChildNodeLists().get(childCount).getStuCellFourPercent() == 100){
+                                if(cellByTopicIdList.get(cellCount).getChildNodeLists().get(childCount).getStuCellFourPercent() == 100||!cellByTopicIdList.get(cellCount).getChildNodeLists().get(childCount).getCategoryName().equals("视频")){
                                     continue;
                                 }
+                                System.out.println(cellByTopicIdList.get(cellCount));
                                 boolean pd = true;
                                 while(pd) {
                                     pd = funtion(processCount, cellCount, childCount);
@@ -146,7 +151,7 @@ public class studioFiddler {
     public static String getUserInfo() throws IOException, ParseException {
         JSONObject jsonObject = Post.send_Body_Object(headers,data,resource.getString("getUserInfo"));
         return jsonObject.get("disPlayName").toString();
-    };
+    }
 
     /**
      * 用于没有childNodeLists列表的课程
@@ -158,7 +163,8 @@ public class studioFiddler {
      * @throws ParseException
      * @throws InterruptedException
      */
-    public static boolean funtion1(int processCount,int cellCount,int childCount) throws IOException, ParseException, InterruptedException {
+    public static boolean funtion1(int processCount,int cellCount,int childCount) throws Exception {
+        boolean couserpd = true;
         data.clear();
         data.put("courseOpenId",courseList.get(course).getCourseOpenId());
         data.put("openClassId",courseList.get(course).getOpenClassId());
@@ -176,15 +182,25 @@ public class studioFiddler {
         System.out.println("当前执行:"+cellByTopicIdList.get(cellCount).getCellName());
 
         if(cellByTopicIdList.get(cellCount).getCategoryName().equals("视频")){
-            return brush_video(processCount,cellCount,childCount);
-        }else if(cellByTopicIdList.get(cellCount).getCategoryName().equals("office文档")||
-                cellByTopicIdList.get(cellCount).getCategoryName().equals("链接")||
-                cellByTopicIdList.get(cellCount).getCategoryName().equals("文档")){
-            return false;
-        }else {
-            System.out.println("文件类型"+cellByTopicIdList.get(cellCount).getCategoryName());
-            return  brush_ppt(processCount,cellCount,childCount);
+            couserpd =  brush_video(processCount,cellCount,childCount);
+            return  couserpd;
         }
+//        else if(cellByTopicIdList.get(cellCount).getCategoryName().equals("office文档")||
+//                cellByTopicIdList.get(cellCount).getCategoryName().equals("链接")||
+//                cellByTopicIdList.get(cellCount).getCategoryName().equals("文档")){
+////            System.out.println("执行这里");
+//            return false;
+//        }else {
+////            System.out.println("文件类型"+cellByTopicIdList.get(cellCount).getCategoryName());
+//            for (int i=1;i<=child_dIrectoryList.get(0).getPageCount();i++) {
+//                couserpd = brush_ppt(processCount, cellCount, childCount,null,i,i-1);
+//                couserpd = brush_ppt(processCount, cellCount, childCount,null,i,i);
+//                if (!couserpd){
+//                    return couserpd;
+//                }
+//            }
+//        }
+        return couserpd =true;
     }
 
     /**
@@ -197,7 +213,8 @@ public class studioFiddler {
      * @throws ParseException
      * @throws InterruptedException
      */
-    public static boolean funtion(int processCount,int cellCount,int childCount) throws IOException, ParseException, InterruptedException {
+    public static boolean funtion(int processCount,int cellCount,int childCount) throws Exception {
+        boolean couserpd  = true;
         data.clear();
         data.put("courseOpenId",courseList.get(course).getCourseOpenId());
         data.put("openClassId",courseList.get(course).getOpenClassId());
@@ -214,14 +231,27 @@ public class studioFiddler {
         data.put("cellLogId",child_dIrectoryList.get(0).getCellLogId());
         System.out.println("当前执行:"+cellByTopicIdList.get(cellCount).getChildNodeLists().get(childCount).getCellName());
         if(cellByTopicIdList.get(cellCount).getChildNodeLists().get(childCount).getCategoryName().equals("视频")){
-            return brush_video(processCount,cellCount,childCount);
-        }else if(cellByTopicIdList.get(cellCount).getChildNodeLists().get(childCount).equals("office文档")||
-                cellByTopicIdList.get(cellCount).getChildNodeLists().get(childCount).equals("链接")||
-                cellByTopicIdList.get(cellCount).getChildNodeLists().get(childCount).equals("文档")){
-            return false;
-        }else {
-            return  brush_ppt(processCount,cellCount,childCount);
+            couserpd = brush_video(processCount,cellCount,childCount);
+            return couserpd;
         }
+//        else if(cellByTopicIdList.get(cellCount).getChildNodeLists().get(childCount).getCategoryName().equals("office文档")||
+//                cellByTopicIdList.get(cellCount).getChildNodeLists().get(childCount).getCategoryName().equals("链接")||
+//                cellByTopicIdList.get(cellCount).getChildNodeLists().get(childCount).getCategoryName().equals("文档")){
+//            return false;
+//        }else {
+//            if(child_dIrectoryList.get(0).getPageCount()==1){
+//                child_dIrectoryList.get(0).setPageCount(10);
+//            }
+//            for (int i=1;i<=child_dIrectoryList.get(0).getPageCount();i++) {
+//                couserpd = brush_ppt(processCount, cellCount, childCount,child_dIrectoryList.get(0).getCellLogId(), i, i - 1);
+//                if (couserpd == false){
+//                    return  couserpd;
+//                }
+//                couserpd = brush_ppt(processCount, cellCount, childCount,child_dIrectoryList.get(0).getCellLogId(), i, i);
+//
+//            }
+//        }
+        return couserpd;
     }
 
     /**
@@ -257,36 +287,52 @@ public class studioFiddler {
      * @param processCount
      * @param cellCount
      * @param childCount
+     * @param i
+     * @param j
      * @return
      * @throws IOException
      * @throws ParseException
+     * @throws InterruptedException
      */
-    public static Boolean brush_ppt(int processCount,int cellCount,int childCount) throws IOException, ParseException {
-        int j;
+    public static Boolean brush_ppt(int processCount,int cellCount,int childCount,String cellLodIdCount,int i,int j) throws Exception {
+        /**防止死循环 */
+        int xunhuan = 0;
         JSONObject jsonObject4 = null;
-        for (int i=1;i<=child_dIrectoryList.get(0).getPageCount();i++){
             data.put("picNum",String.valueOf(i));
             data.put("studyNewlyTime","0");
-            for (j=0;j<=i;j++){
-                data.put("studyNewlyPicNum",String.valueOf(j));
-                data.put("token",String.valueOf(child_dIrectoryList.get(0).getGuIdToken()));
-                jsonObject4 = stuProcessCellLog(resource.getString("stuProcessCellLog"),data);
-                if((jsonObject4.getString("code").equals("-1"))&&i==j&&i==child_dIrectoryList.get(0).getPageCount()){
-                    System.out.println("正在执行...当前完成度:"+getPercent(processCount, cellCount, childCount));
-                    xunhuan++;
-                    if(xunhuan>=20){
-                        return false;
-                    }
-                    continue;
-                }else {
-                    if(i==j&&i==child_dIrectoryList.get(0).getPageCount()){
-                        System.out.println("已完成:"+child_dIrectoryList.get(0).getCellName()+"  完成度:"+getPercent(processCount, cellCount, childCount));
-                        return false;
+            Thread.sleep(500);
+            if(!(cellLodIdCount == null)){
+                data.put("cellLogId",cellLodIdCount);
+            }
+            data.put("studyNewlyPicNum",String.valueOf(j));
+            data.put("token",String.valueOf(child_dIrectoryList.get(0).getGuIdToken()));
+            jsonObject4 = stuProcessCellLog(resource.getString("stuProcessCellLog"),data);
+//            System.out.println("当前："+jsonObject4+i+":"+j+data.toString());
+            if((jsonObject4.getString("code").equals("-1"))&&i==j&&i==child_dIrectoryList.get(0).getPageCount()){
+                System.out.println("正在执行...当前完成度:"+getPercent(processCount, cellCount, childCount));
+                xunhuan++;
+                if(getPercent(processCount, cellCount, childCount) == 100){
+                    return false;
+                }
+                if(xunhuan>=6){
+                    System.out.println("1");
+                    xunhuan = 0;
+                    try {
+                        throw  new Exception("手动刷去吧:"+child_dIrectoryList.get(0).getCourseName());
+                    }finally {
+                        return  false;
                     }
 
                 }
+            }else {
+                if(getPercent(processCount, cellCount, childCount)==100){
+                    return false;
+                }
+                if(i==j&&i==child_dIrectoryList.get(0).getPageCount()){
+                    System.out.println("已完成:"+child_dIrectoryList.get(0).getCellName()+"  完成度:"+getPercent(processCount, cellCount, childCount));
+                    return false;
+                }
             }
-        }
         return true;
     }
 
@@ -301,7 +347,8 @@ public class studioFiddler {
      * @throws InterruptedException
      */
     public static Boolean brush_video(int processCount,int cellCount,int childCount) throws IOException, ParseException, InterruptedException {
-        int j;
+        /**防止死循环 */
+        int xunhuan = 0;
         JSONObject jsonObject4 = null;
         data.put("picNum","0");
         data.put("studyNewlyPicNum","0");
@@ -315,11 +362,11 @@ public class studioFiddler {
             if (number > child_dIrectoryList.get(0).getAudioVideoLong()){
                 number = child_dIrectoryList.get(0).getAudioVideoLong();
             }
-//            System.out.println(jsonObject4.toString()+number);
             if((jsonObject4.getString("code").equals("-1"))&&number >= child_dIrectoryList.get(0).getAudioVideoLong()){
+
                 System.out.println("正在执行...当前完成度:"+getPercent(processCount, cellCount, childCount));
                 xunhuan++;
-                if(xunhuan>=20){
+                if(xunhuan>=10){
                     number = (int)(1+Math.random()*(20-1+1))+0.666407;
                     if (xunhuan >=30){
                         return false;

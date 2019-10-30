@@ -8,5 +8,5 @@ Class-Path: selenium-api-3.8.1.jar commons-io-2.6.jar byte-buddy-1.7.5
  l-sniffer-annotations-1.14.jar json-lib-2.4-jdk15.jar httpcore-4.4.11
  .jar j2objc-annotations-1.1.jar selenium-server-standalone-3.141.59.j
  ar selenium-remote-driver-3.8.1.jar
-Main-Class: 接口版.studioFiddler
+Main-Class: 接口版.StudioFiddler
 
